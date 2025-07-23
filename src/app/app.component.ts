@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 
 // Para trabalhar com formulários no Angular 12
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { RouterOutlet } from '@angular/router';
 
 // Para realizar requisições HTTP
 // import { HttpClientModule } from '@angular/common/http';
@@ -41,7 +42,8 @@ import { MatCardModule } from '@angular/material/card';
     MatInputModule,
     MatIconModule,
     MatListModule,
-    MatCardModule
+    MatCardModule,
+    RouterOutlet
   ],
   templateUrl: 'app.component.html'
 })
