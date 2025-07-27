@@ -21,7 +21,6 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
-import { MatCardModule } from '@angular/material/card';
 
 @Component({
   selector: 'app-root',
@@ -42,7 +41,6 @@ import { MatCardModule } from '@angular/material/card';
     MatInputModule,
     MatIconModule,
     MatListModule,
-    MatCardModule,
     RouterOutlet
   ],
   templateUrl: 'app.component.html'
