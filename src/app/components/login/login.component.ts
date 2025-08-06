@@ -8,6 +8,8 @@ import {MatButtonModule} from '@angular/material/button';
 import { Credenciais } from '../../models/Credenciais';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
+import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -24,30 +26,37 @@ import { ToastrService } from 'ngx-toastr';
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
-  credis: Credenciais = {
+  creds: Credenciais = {
     email: '',
-    senha: ''
+    password: ''
   }
 
   email = new FormControl(null, Validators.email)
-  senha = new FormControl(null, Validators.minLength(3))
+  password = new FormControl(null, Validators.minLength(3))
 
-  constructor(private toastr: ToastrService) {}
+  constructor(
+    private toastr: ToastrService,
+    private authService: AuthService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
   }
 
   logar() {
-    this.toastr.error('Usuário e/ou senha inválidos!', 'Login')
-    this.senha.setValue('')
+    this.creds.email = this.email.value;
+    this.creds.password = this.password.value;
+
+    this.authService.authenticate(this.creds).subscribe(response => {
+    this.authService.successfullLogin(response.headers.get('Authorization').substring(7))
+    this.router.navigate(['home'])
+    }, () => {
+      this.toastr.error('Usuário e/ou senha inválidos')
+    })
   }
 
   validaCampos(): boolean {
-    if(this.email.value && this.senha.value) {
-      return true
-    } else {
-      return false
-    }
+    return this.email.value && this.password.value
   }
 
 }
