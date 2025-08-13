@@ -38,5 +38,4 @@ export class TecnicoCreateComponent {
   validaCampos(): boolean {
     return this.name.valid && this.cpf.valid && this.email.valid && this.password.valid
   }
-
 }
