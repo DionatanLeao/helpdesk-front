@@ -24,7 +24,7 @@ export class NavComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.router.url === '/') {
-      this.router.navigate(['tecnicos']);
+      this.router.navigate(['home']);
     }
   }
 
