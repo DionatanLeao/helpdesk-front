@@ -11,25 +11,44 @@
 
         <mat-form-field class="fullWidth" appearance="fill">
             <mat-label>Nome</mat-label>
-            <input matInput placeholder="Ex. Fulano de tal">
+            <input 
+            [formControl]="name"
+            required
+            matInput 
+            maxlength="50"
+            placeholder="Ex. Fulano de tal">
         </mat-form-field>
 
         <mat-form-field class="fullWidth" appearance="fill">
             <mat-label>CPF</mat-label>
-            <input matInput placeholder="Ex. 000.000.000-00">
+            <input
+            [formControl]="cpf"
+            required 
+            matInput 
+            mask="000.000.000-00"
+            placeholder="Ex. 000.000.000-00">
         </mat-form-field>
 
         <mat-form-field class="fullWidth" appearance="fill">
             <mat-label>E-mail</mat-label>
-            <input matInput placeholder="Ex. fulano@mail.com">
+            <input 
+            [formControl]="email"
+            required
+            matInput 
+            placeholder="Ex. fulano@mail.com">
         </mat-form-field>
 
         <mat-form-field class="fullWidth" appearance="fill">
             <mat-label>Senha</mat-label>
-            <input type="password" matInput placeholder="Ex. 1234">
+            <input 
+            [formControl]="password"
+            required
+            type="password" 
+            matInput 
+            placeholder="Ex. 1234">
         </mat-form-field>
 
-        <button class="fullWidth" mat-flat-button color="primary">Cadastrar</button>
-        <button class="fullWidth" mat-stroked-button color="warn">Cancelar</button>
+        <button disabled="!validaCampos()" class="fullWidth" mat-flat-button color="primary">Cadastrar</button>
+        <button routerLink="../" class="fullWidth" mat-stroked-button color="warn">Cancelar</button>
     </form>
 </div>
