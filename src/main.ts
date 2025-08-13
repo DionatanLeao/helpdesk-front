@@ -4,6 +4,7 @@ import { AppComponent } from './app/app.component';
 import { provideHttpClient, withInterceptors  } from '@angular/common/http';
 import { provideToastr } from 'ngx-toastr';
 import { authInterceptor } from './app/interceptors/auth.interceptor';
+import { provideNgxMask } from 'ngx-mask';
 
 bootstrapApplication(AppComponent, {
   providers: [
@@ -13,6 +14,7 @@ bootstrapApplication(AppComponent, {
           timeOut: 4000,
           closeButton: true,
           progressBar: true
-        })
+        }),
+    provideNgxMask(),
     ]
 }).catch((err) => console.error(err));
