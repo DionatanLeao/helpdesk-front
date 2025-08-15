@@ -16,7 +16,7 @@ import { TecnicoService } from '../../../services/tecnico.service';
 })
 export class TecnicoListComponent {
   ELEMENT_DATA: Tecnico[] = []
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol', 'acoes'];
+  displayedColumns: string[] = ['id', 'name', 'weight', 'symbol', 'acoes'];
   dataSource = new MatTableDataSource<Tecnico>(this.ELEMENT_DATA);
 
   @ViewChild(MatPaginator) paginator: MatPaginator

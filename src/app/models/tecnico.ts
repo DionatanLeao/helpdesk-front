@@ -1,9 +1,9 @@
 export interface Tecnico {
     id?: any;
-    nome: string;
+    name: string;
     cpf: string;
     email: string;
-    senha: string;
+    password: string;
     perfis: string[];
     dataCriacao: any;
 }
