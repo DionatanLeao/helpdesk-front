@@ -4,7 +4,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatIconModule} from '@angular/material/icon';
 import {MatInputModule} from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
-import { RouterModule } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import {FormControl, ReactiveFormsModule, FormsModule, Validators} from '@angular/forms';
 import { NgxMaskDirective } from 'ngx-mask';
 import { TecnicoService } from '../../../services/tecnico.service';
@@ -13,7 +13,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-tecnico-create',
+  selector: 'app-tecnico-update',
   imports: [
     MatCheckboxModule,
     MatFormFieldModule,
@@ -25,18 +25,18 @@ import { Router } from '@angular/router';
     ReactiveFormsModule,
     NgxMaskDirective
   ],
-  templateUrl: './tecnico-create.component.html',
-  styleUrl: './tecnico-create.component.css'
+  templateUrl: './tecnico-update.component.html',
+  styleUrl: './tecnico-update.component.css'
 })
-export class TecnicoCreateComponent {
+export class TecnicoUpdateComponent {
   tecnico: Tecnico = {
-    id: '',
-    name: '',
-    cpf: '',
-    email: '',
-    password: '',
-    profiles: [],
-    creationDate: ''
+      id: '',
+      name: '',
+      cpf: '',
+      email: '',
+      password: '',
+      profiles: [],
+      creationDate: ''
   }
 
   name: FormControl = new FormControl(null, [Validators.required, Validators.minLength(3)]);
@@ -47,20 +47,33 @@ export class TecnicoCreateComponent {
   constructor(
     private tecnicoService: TecnicoService,
     private toast: ToastrService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute,
   ) {}
 
   ngOnInit(): void {
+    this.tecnico.id = this.route.snapshot.paramMap.get('id')
+    this.findById()
   } 
 
-  create(): void {
+  findById(): void {
+    this.tecnicoService.findById(this.tecnico.id).subscribe( response => {
+      this.tecnico = response
+      this.name.setValue(this.tecnico.name);
+      this.cpf.setValue(this.tecnico.cpf);
+      this.email.setValue(this.tecnico.email);
+      this.password.setValue(this.tecnico.password);
+    })
+  }
+
+  update(): void {
     this.tecnico.name = this.name.value;
     this.tecnico.cpf = this.cpf.value;
     this.tecnico.email = this.email.value;
     this.tecnico.password = this.password.value;
 
-    this.tecnicoService.create(this.tecnico).subscribe(() => {
-      this.toast.success('Técnico cadastrado com sucesso', 'Cadastro')
+    this.tecnicoService.update(this.tecnico).subscribe(() => {
+      this.toast.success('Técnico atualizado com sucesso', 'Update')
       this.router.navigate(['tecnicos'])
     }, ex => {
       if(ex.error.errors) {
@@ -83,4 +96,5 @@ export class TecnicoCreateComponent {
   validaCampos(): boolean {
     return this.name.valid && this.cpf.valid && this.email.valid && this.password.valid
   }
+
 }
