@@ -9,6 +9,7 @@ import {FormControl, ReactiveFormsModule, FormsModule, Validators} from '@angula
 import {MatSelectModule} from '@angular/material/select';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
+import { Chamado } from '../../../models/chamado';
 
 @Component({
   selector: 'app-chamado-create',
@@ -27,6 +28,27 @@ import { Router } from '@angular/router';
   styleUrl: './chamado-create.component.css'
 })
 export class ChamadoCreateComponent {
+  chamado: Chamado = {
+    id: '',
+    openingDate: '',
+    closingDate: '',
+    priority: '',
+    status: '',
+    title: '',
+    observations: '',
+    technician: '',
+    client: '',
+    clientName: '',
+    technicianName: '',
+  }
+
+  priority: FormControl = new FormControl(null, [Validators.required]);
+  status: FormControl = new FormControl(null, [Validators.required]);
+  title: FormControl = new FormControl(null, [Validators.required]);
+  observations: FormControl = new FormControl(null, [Validators.required]);
+  technician: FormControl = new FormControl(null, [Validators.required]);
+  client: FormControl = new FormControl(null, [Validators.required]);
+
   constructor() {}
   
   ngOnInit(): void {
@@ -37,7 +59,9 @@ export class ChamadoCreateComponent {
   }
   
   validaCampos(): boolean {
-    return true
+    return this.priority.valid && this.status.valid &&
+    this.title.valid && this.observations.valid &&
+    this.technician.valid && this.client.valid
   }
 
 }
