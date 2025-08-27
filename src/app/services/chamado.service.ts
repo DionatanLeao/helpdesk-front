@@ -25,8 +25,4 @@ constructor(private httpClient: HttpClient) { }
   update(chamado: Chamado): Observable<Chamado> {
     return this.httpClient.put<Chamado>(`${API_CONFIG.baseUrl}/tickets/${chamado.id}`, chamado)
   }
-
-  delete(id: any): Observable<Chamado> {
-    return this.httpClient.delete<Chamado>(`${API_CONFIG.baseUrl}/clients/${id}`)
-  }
 }

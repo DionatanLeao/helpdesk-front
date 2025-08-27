@@ -5,7 +5,7 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatInputModule} from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import {FormControl, ReactiveFormsModule, FormsModule, Validators} from '@angular/forms';
 import {MatSelectModule} from '@angular/material/select';
 import { ToastrService } from 'ngx-toastr';
@@ -18,7 +18,7 @@ import { TecnicoService } from '../../../services/tecnico.service';
 import { ChamadoService } from '../../../services/chamado.service';
 
 @Component({
-  selector: 'app-chamado-create',
+  selector: 'app-chamado-update',
   imports: [
     MatCheckboxModule,
     MatFormFieldModule,
@@ -31,11 +31,10 @@ import { ChamadoService } from '../../../services/chamado.service';
     MatSelectModule,
     CommonModule
 ],
-  templateUrl: './chamado-create.component.html',
-  styleUrl: './chamado-create.component.css'
+  templateUrl: './chamado-update.component.html',
+  styleUrl: './chamado-update.component.css'
 })
-export class ChamadoCreateComponent {
-
+export class ChamadoUpdateComponent {
   chamado: Chamado = {
     openingDate: '',
     closingDate: '',
@@ -64,13 +63,30 @@ export class ChamadoCreateComponent {
     private clienteService: ClienteService,
     private tecnicoService: TecnicoService,
     private toast: ToastrService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute,
   ) {}
   
   ngOnInit(): void {
+    this.chamado.id = this.route.snapshot.paramMap.get('id')
+    this.findById()
     this.findAllClientes()
     this.findAllTecnicos()
   } 
+
+  findById(): void {
+    this.chamadoService.findById(this.chamado.id).subscribe(response => {
+      this.chamado = response
+      this.priority.setValue(this.chamado.priority);
+      this.status.setValue(this.chamado.status);
+      this.title.setValue(this.chamado.title);
+      this.observations.setValue(this.chamado.observations);
+      this.technician.setValue(this.chamado.technician);
+      this.client.setValue(this.chamado.client);
+    }, ex => {
+      this.toast.error(ex.error.error)
+    })
+  }
 
   findAllClientes(): void {
     this.clienteService.findAll().subscribe(response => {
@@ -84,7 +100,7 @@ export class ChamadoCreateComponent {
     })
   }
 
-  create(): void {
+  update(): void {
     this.chamado.priority = this.priority.value
     this.chamado.status = this.status.value
     this.chamado.title = this.title.value
@@ -92,12 +108,32 @@ export class ChamadoCreateComponent {
     this.chamado.technician = this.technician.value
     this.chamado.client = this.client.value
 
-    this.chamadoService.create(this.chamado).subscribe(response => {
-      this.toast.success('Chamado criado com sucesso', 'Novo chamado')
+    this.chamadoService.update(this.chamado).subscribe(response => {
+      this.toast.success('Chamado atualizado com sucesso', 'Update chamado')
       this.router.navigate(['chamados'])
     }, ex => {
       this.toast.error(ex.error.error)
     })
+  }
+
+  returnStatus(status: any): string {
+    if(status == 0) {
+      return 'ABERTO'
+    } else if(status == 1) {
+      return 'EM ANDAMENTO'
+    } else {
+      return 'ENCERRADO'
+    }
+  }
+
+  returnPriority(priority: any): string {
+    if(priority == 0) {
+      return 'BAIXA'
+    } else if(priority == 1) {
+      return 'MÉDIA'
+    } else {
+      return 'ALTA'
+    }
   }
   
   validaCampos(): boolean {
@@ -105,5 +141,4 @@ export class ChamadoCreateComponent {
     this.title.valid && this.observations.valid &&
     this.technician.valid && this.client.valid
   }
-
 }

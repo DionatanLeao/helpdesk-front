@@ -31,6 +31,8 @@ img {
     margin: 1rem 0 0 1rem;
     color: white;
     background: linear-gradient(90deg,rgba(14, 18, 105, 1) 0%, rgba(37, 97, 207, 1) 0%, rgba(0, 212, 255, 1) 100%);
+    padding: 0;
+    border-radius: 50%;
 }
 
 .nav-list .nav-item {
@@ -45,10 +47,15 @@ img {
 }
 
 span {
-    padding: 10px;
+  padding: 10px;
 }
 
 a.nav-item {
   position: relative;
   z-index: 1000;
+}
+
+button {
+  width: 2.2rem;
+  height: 2.2rem;
 }
