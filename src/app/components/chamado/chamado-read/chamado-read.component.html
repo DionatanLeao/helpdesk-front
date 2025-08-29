@@ -1,0 +1,66 @@
+<div class="container">
+    <form class="form">
+        <h1 class="fullWidth" >Visualizar Chamado</h1>
+        <img class="fullWidth" src="assets/img/create.svg" alt="Help Desk - dicas de um DEV">
+
+        <mat-form-field class="fullWidth" appearance="outline">
+            <mat-label>Título do chamado</mat-label>
+            <input 
+            [formControl]="title"
+            matInput>
+        </mat-form-field>
+    </form>
+
+    <div class="status-priority">
+        <mat-form-field appearance="outline">
+            <mat-label>STATUS ({{returnStatus(chamado.status)}})</mat-label>
+            <mat-select [formControl]="status">
+                <mat-option value="0">ABERTO</mat-option>
+                <mat-option value="1">EM ANDAMENTO</mat-option>
+                <mat-option value="2">ENCERRADO</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>PRIORIDADE ({{returnPriority(chamado.priority)}})</mat-label>
+            <mat-select [formControl]="priority">
+                <mat-option value="0">BAIXA</mat-option>
+                <mat-option value="1">MÉDIA</mat-option>
+                <mat-option value="2">ALTA</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+
+    <div class="tecnico">
+        <mat-form-field class="fullWidth" appearance="outline">
+            <mat-label>TÉCNICO ({{chamado.technicianName}})</mat-label>
+            <mat-select [formControl]="technician">
+                <mat-option>{{chamado.technicianName}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+
+    <div class="cliente">
+        <mat-form-field class="fullWidth" appearance="outline">
+            <mat-label>CLIENTE ({{chamado.clientName}})</mat-label>
+            <mat-select [formControl]="client">
+                <mat-option>{{chamado.clientName}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+
+    <form class="form">
+        <mat-form-field class="fullWidth" appearance="outline">
+            <mat-label>Deixe uma observação</mat-label>
+            <textarea 
+            [formControl]="observations" 
+            class="observacao" 
+            matInput>
+            </textarea>
+        </mat-form-field>
+    </form>
+
+    <button routerLink="../../" class="fullWidth" mat-stroked-button color="warn">Voltar</button>
+</div>
+
+
